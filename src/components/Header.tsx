@@ -1,3 +1,4 @@
+import { NAV_LINKS, SITE } from "@/lib/constants";
 import { Link } from "@tanstack/react-router";
 import { LucideTrello } from "lucide-react";
 
@@ -7,37 +8,28 @@ export default function Header() {
 			<div className="container mx-auto px-4 py-3 sm:py-4 flex items-center justify-between">
 				<div className="flex items-center space-x-2">
 					<a href="/" className="flex items-center space-x-2">
-						<LucideTrello />
+						<LucideTrello className="text-blue-500" />
 						<span className="text-xl sm:text-2xl font-bold text-gray-900">
-							Trello Clone
+							{SITE.title}
 						</span>
 					</a>
 				</div>
 
 				<nav className="flex flex-row">
-					<div className="px-2 font-bold">
-						<Link to="/">Home</Link>
-					</div>
-
-					<div className="px-2 font-bold">
-						<Link to="/demo/store">Store</Link>
-					</div>
-
-					<div className="px-2 font-bold">
-						<Link to="/demo/tanstack-query">TanStack Query</Link>
-					</div>
-
-					<div className="px-2 font-bold">
-						<Link to="/demo/form/simple">Simple Form</Link>
-					</div>
-
-					<div className="px-2 font-bold">
-						<Link to="/demo/form/address">Address Form</Link>
-					</div>
-
-					<div className="px-2 font-bold">
-						<Link to="/dashboard">Dashboard</Link>
-					</div>
+					<ul className="flex space-x-4 items-center flew-row">
+						<li>
+							{NAV_LINKS.map((link) => (
+								<Link
+									key={link.to}
+									to={link.to}
+									activeProps={{ className: "text-blue-600" }}
+									className="px-2 font-bold hover:text-blue-600"
+								>
+									{link.label}
+								</Link>
+							))}
+						</li>
+					</ul>
 				</nav>
 			</div>
 		</header>
