@@ -17,4 +17,8 @@ export const NAV_LINKS: NavLink[] = [
 		to: "/dashboard",
 		label: "Dashboard",
 	},
+	{
+		to: "/boards",
+		label: "Boards",
+	},
 ];
