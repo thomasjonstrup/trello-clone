@@ -1,5 +1,7 @@
 Welcome to your new TanStack app!
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b9f8491d-eae8-4b5c-965a-e7d9593f8d0e/deploy-status)](https://app.netlify.com/projects/trello-clone-tj/deploys)
+
 # Getting Started
 
 To run this application:
