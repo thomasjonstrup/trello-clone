@@ -1,12 +1,4 @@
 import { useBoards } from '@/hooks/useBoards';
-import supabase from '@/lib/supabase';
-import React, { useEffect } from 'react'
-
-const getBoards = async () => {
-	// Fetch boards from Supabase or any other data source
-	return await supabase.from("boards").select("*");
-};
-
 
 export const Boards = () => {
 	const { data, error, isLoading } = useBoards();
