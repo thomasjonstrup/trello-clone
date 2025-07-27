@@ -29,18 +29,19 @@ function RouteComponent() {
 				supabaseClient={supabase} appearance={{ theme: ThemeSupa }}
 			/>
 		);
-	} else {
-		return (
-			<div>
-				<h1>Welcome to the Dashboard</h1>
-				<p>User ID: {session.user.id}</p>
-				<p>Email: {session.user.email}</p>
-				{/* You can add more components here, like Boards */}
-				<Boards />
-			</div>
-		)
 	}
-	/*
 
-	return <div>Hello "/dashboard/"!</div>; */
+	if (!session.user) {
+		return <div className="text-center">No user session found.</div>;
+	}
+
+	return (
+		<div>
+			<h1>Welcome to the Dashboard</h1>
+			<p>User ID: {session.user.id}</p>
+			<p>Email: {session.user.email}</p>
+			{/* You can add more components here, like Boards */}
+			<Boards />
+		</div>
+	);
 }

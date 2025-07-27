@@ -10,11 +10,11 @@ export const Boards = () => {
 	<div>
 		<h1>Boards</h1>
 		<ul>
-			{data?.map((board: any) => (
+			{data?.map((board) => (
 				<li key={board.id}>
 					<h2>{board.title}</h2>
 					<p>{board.description}</p>
-					<span style={{ backgroundColor: board.color }}>{board.color}</span>
+					<span style={{ backgroundColor: board.color ?? '' }}>{board.color}</span>
 				</li>
 			))}
 		</ul>
