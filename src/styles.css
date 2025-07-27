@@ -4,6 +4,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   @apply m-0;
   font-family:
@@ -134,5 +141,20 @@ code {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+  .col-center {
+    @apply flex items-center justify-center flex-col;
+  }
+  .general-title {
+    @apply text-2xl font-semibold text-primary mb-4;
+  }
+  .general-subtitle {
+    @apply text-lg font-medium text-secondary mb-2;
   }
 }
