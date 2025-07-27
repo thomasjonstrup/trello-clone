@@ -1,6 +1,5 @@
 import { Section } from "@/components/Section";
 import { createFileRoute } from "@tanstack/react-router";
-import logo from "../logo.svg";
 
 export const Route = createFileRoute("/")({
 	component: App,
