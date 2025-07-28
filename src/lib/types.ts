@@ -28,3 +28,12 @@ export type SocialLink = {
 	label: string;
 	icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 };
+
+export interface Column {
+	id: number;
+	created_at: string; // ISO timestamp string
+	board_id: number;
+	title: string;
+	sort_order: number;
+	user_id: string;
+}
