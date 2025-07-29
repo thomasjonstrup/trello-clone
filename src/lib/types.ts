@@ -37,3 +37,14 @@ export interface Column {
 	sort_order: number;
 	user_id: string;
 }
+export interface Task {
+	id: number;
+	created_at: string; // ISO timestamp string
+	title: string;
+	description?: string | null;
+	assignee?: string | null;
+	due_date?: string | null; // date as string (e.g. "2024-08-01")
+	priority?: string | null;
+	sort_order: number;
+	column_id: number;
+}
