@@ -1,6 +1,4 @@
 import { BoardColumn } from "@/components/BoardColumn";
-import { BoardColumnTask } from "@/components/BoardColumnTask";
-import { IconBadge } from "@/components/IconBadge";
 import { Section } from "@/components/Section";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,11 +6,8 @@ import { Input } from "@/components/ui/input";
 import { useBoard } from "@/hooks/useBoard";
 import { useColumns } from "@/hooks/useColumns";
 import { useCreateColumn } from "@/hooks/useCreateColumn";
-import { useCreateTask } from "@/hooks/useCreateTask";
-import { useTasks } from "@/hooks/useTasks";
 import { createFileRoute, useParams } from "@tanstack/react-router";
-import { format } from "date-fns";
-import { Plus, Trello } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useState } from "react";
 
 export const Route = createFileRoute("/boards/$boardId")({
