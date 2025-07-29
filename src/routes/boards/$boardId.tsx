@@ -7,6 +7,7 @@ import { useBoard } from "@/hooks/useBoard";
 import { useColumns } from "@/hooks/useColumns";
 import { useCreateColumn } from "@/hooks/useCreateColumn";
 import { createFileRoute, useParams } from "@tanstack/react-router";
+import { format } from "date-fns";
 import { Plus, Trello } from "lucide-react";
 import { useState } from "react";
 
@@ -119,7 +120,10 @@ function RouteComponent() {
 														</span>
 													</div>
 													<span className="text-xs text-gray-500">
-														15.1.2024
+														{format(
+															new Date(column.created_at),
+															"MMM dd, yyyy",
+														)}
 													</span>
 												</div>
 											</div>
