@@ -1,0 +1,7 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "example_message": "God dag {username}",
+  "organize_life": "Organiser arbejde og liv med",
+  "organize_life_with_app": "",
+  "frontpage_subtitle": "{app} hjælper teams med at komme videre med arbejdet. Samarbejd, administrer projekter og nå nye produktivitetstoppe. Fra højhuse til hjemmekontoret – din teams arbejdsmetode er unik – opnå det hele med {app}."
+}

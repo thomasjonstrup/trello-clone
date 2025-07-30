@@ -1,0 +1,6 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "example_message": "Guten Tag {username}",
+  "organize_life": "Organisieren Sie Arbeit und Leben mit",
+  "frontpage_subtitle": "{app} helps teams move work forward. Collaborate, manage projects, and reach new productivity peaks. From high rises to the home office, the way your team works is unique—accomplish it all with {app}."
+}
