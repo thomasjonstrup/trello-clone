@@ -12,7 +12,8 @@
     "lint": "biome lint",
     "check": "biome check",
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky"
+    "prepare": "husky",
+    "machine-translate": "inlang machine translate --project project.inlang"
   },
   "dependencies": {
     "@gsap/react": "2.1.2",
@@ -58,6 +59,8 @@
     "typescript": "^5.7.2",
     "vite": "^6.3.5",
     "vitest": "^3.2.4",
-    "web-vitals": "^4.2.4"
+    "web-vitals": "^4.2.4",
+    "@inlang/paraglide-js": "2.2.0",
+    "@inlang/cli": "^3.0.0"
   }
 }

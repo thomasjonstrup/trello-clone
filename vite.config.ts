@@ -1,3 +1,4 @@
+import { paraglideVitePlugin } from '@inlang/paraglide-js'
 import { defineConfig } from 'vite'
 import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
@@ -7,7 +8,7 @@ import { resolve } from 'node:path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
+  plugins: [paraglideVitePlugin({ project: './project.inlang', outdir: './src/paraglide' }),
     tanstackRouter({ autoCodeSplitting: true }),
     viteReact(),
     tailwindcss(),
