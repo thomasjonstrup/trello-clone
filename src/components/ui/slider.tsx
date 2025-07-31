@@ -1,4 +1,3 @@
-// biome-ignore lint/suspicious/noArrayIndexKey: shadcn/ui component, index key is intentional
 "use client"
 
 import * as React from "react"
