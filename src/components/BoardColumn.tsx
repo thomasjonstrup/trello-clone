@@ -6,10 +6,12 @@ import { Input } from "@/components/ui/input";
 import { useCreateTask } from "@/hooks/useCreateTask";
 import { useTasks } from "@/hooks/useTasks";
 import type { Column } from "@/lib/types";
+import { useDroppable } from "@dnd-kit/core";
 import { Plus, Trello } from "lucide-react";
 import { useState } from "react";
 
 export const BoardColumn = ({ column }: { column: Column }) => {
+	const { setNodeRef, isOver } = useDroppable({ id: column.id });
 	const { data: tasks } = useTasks(Number(column.id));
 	const [addingTaskToColumn, setAddingTaskToColumn] = useState<number | null>(
 		null,
@@ -33,6 +35,7 @@ export const BoardColumn = ({ column }: { column: Column }) => {
 
 	return (
 		<div
+			ref={setNodeRef}
 			key={`column-${column.id}`}
 			className="bg-gray-100 rounded-lg p-4 min-h-[600px]"
 		>
@@ -64,6 +67,7 @@ export const BoardColumn = ({ column }: { column: Column }) => {
 								onChange={(e) => setNewTaskTitle(e.target.value)}
 								onKeyDown={(e) => {
 									if (e.key === "Enter" && newTaskTitle.trim()) {
+										addTask();
 									}
 								}}
 								className="mb-2"

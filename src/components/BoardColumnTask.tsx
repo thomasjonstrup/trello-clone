@@ -1,9 +1,32 @@
 import type { Task } from "@/lib/types";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { format } from "date-fns";
 
 export const BoardColumnTask = ({ task }: { task: Task }) => {
+	const {
+		attributes,
+		listeners,
+		setNodeRef,
+		transform,
+		transition,
+		isDragging,
+	} = useSortable({ id: task.id });
+
+	const styles = {
+		transform: CSS.Transform.toString(transform),
+		transition,
+		opacity: isDragging ? 0.5 : 1,
+	};
+
 	return (
-		<div className="rounded-lg border shadow-2xs hover:shadow-md transition-shadow bg-white">
+		<div
+			ref={setNodeRef}
+			style={styles}
+			{...listeners}
+			{...attributes}
+			className="rounded-lg border shadow-2xs hover:shadow-md transition-shadow bg-white"
+		>
 			<div className="flex flex-col space-y-1.5 p-6 pb-2">
 				<h3 className="tracking-tight text-sm font-medium leading-tight">
 					{task.title || "Untitled task"}

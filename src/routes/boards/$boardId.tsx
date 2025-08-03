@@ -10,6 +10,26 @@ import { createFileRoute, useParams } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 
+import { useUpdateTask } from "@/hooks/useTasks";
+import {
+	DndContext,
+	type DragEndEvent,
+	type DragOverEvent,
+	DragOverlay,
+	type DragStartEvent,
+	PointerSensor,
+	rectIntersection,
+	useDroppable,
+	useSensor,
+	useSensors,
+} from "@dnd-kit/core";
+import {
+	SortableContext,
+	useSortable,
+	verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+
 export const Route = createFileRoute("/boards/$boardId")({
 	component: RouteComponent,
 });
@@ -21,6 +41,16 @@ function RouteComponent() {
 	const { mutate: createColumn } = useCreateColumn();
 	const [addingColumn, setAddingColumn] = useState<boolean>(false);
 	const [newColumnTitle, setNewColumnTitle] = useState<string>("");
+
+	const { mutate: mutateTask } = useUpdateTask();
+
+	const sensors = useSensors(
+		useSensor(PointerSensor, {
+			activationConstraint: {
+				distance: 8,
+			},
+		}),
+	);
 
 	const addColumn = () => {
 		if (newColumnTitle.trim()) {
@@ -36,6 +66,26 @@ function RouteComponent() {
 		}
 	};
 
+	const handleDragStart = (event: DragStartEvent) => {
+		const { active } = event;
+		console.log("Drag started:", active.id);
+	};
+
+	const handleDragOver = (event: DragOverEvent) => {
+		const { active, over } = event;
+		console.log("Drag over: active id ", active.id, "over: ", over?.id);
+	};
+
+	const handleDragEnd = (event: DragEndEvent) => {
+		const { active, over } = event;
+		console.log("Drag ended:", active.id, "over:", over?.id);
+
+		mutateTask({
+			id: Number(active.id),
+			sort_order: over?.id ? Number(over.id) : 0, // Adjust sort_order based on the new position
+		});
+	};
+
 	if (isLoading || !board) {
 		return <div className="text-center">Loading board...</div>;
 	}
@@ -48,50 +98,59 @@ function RouteComponent() {
 						Board Details: {board?.title}
 					</h1>
 
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-						{columns?.map((column) => (
-							<BoardColumn key={`column-${column.id}`} column={column} />
-						))}
-						<div className="w-80 flex-shrink-0">
-							{addingColumn ? (
-								<Card className="p-4 bg-white shadow-md">
-									<CardContent className="p-3">
-										<Input
-											placeholder="Enter column title..."
-											value={newColumnTitle}
-											onChange={(e) => setNewColumnTitle(e.target.value)}
-											onKeyDown={(e) => {
-												if (e.key === "Enter" && newColumnTitle.trim()) {
-												}
-											}}
-											className="mb-2"
-											autoFocus
-										/>
-										<div className="flex gap-2">
-											<Button size="sm" onClick={() => addColumn()}>
-												<Plus className="mr-2" />
-												Add Column
-											</Button>
-											<Button
-												size="sm"
-												variant="outline"
-												onClick={() => {
-													setAddingColumn(false);
-													setNewColumnTitle("");
+					<DndContext
+						sensors={sensors}
+						collisionDetection={rectIntersection}
+						onDragStart={handleDragStart}
+						onDragOver={handleDragOver}
+						onDragEnd={handleDragEnd}
+					>
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+							{columns?.map((column) => (
+								<BoardColumn key={`column-${column.id}`} column={column} />
+							))}
+							<div className="w-80 flex-shrink-0">
+								{addingColumn ? (
+									<Card className="p-4 bg-white shadow-md">
+										<CardContent className="p-3">
+											<Input
+												placeholder="Enter column title..."
+												value={newColumnTitle}
+												onChange={(e) => setNewColumnTitle(e.target.value)}
+												onKeyDown={(e) => {
+													if (e.key === "Enter" && newColumnTitle.trim()) {
+														addColumn();
+													}
 												}}
-											>
-												Cancel
-											</Button>
-										</div>
-									</CardContent>
-								</Card>
-							) : (
-								<Button size="sm" onClick={() => setAddingColumn(true)}>
-									<Plus />
-								</Button>
-							)}
+												className="mb-2"
+												autoFocus
+											/>
+											<div className="flex gap-2">
+												<Button size="sm" onClick={() => addColumn()}>
+													<Plus className="mr-2" />
+													Add Column
+												</Button>
+												<Button
+													size="sm"
+													variant="outline"
+													onClick={() => {
+														setAddingColumn(false);
+														setNewColumnTitle("");
+													}}
+												>
+													Cancel
+												</Button>
+											</div>
+										</CardContent>
+									</Card>
+								) : (
+									<Button size="sm" onClick={() => setAddingColumn(true)}>
+										<Plus />
+									</Button>
+								)}
+							</div>
 						</div>
-					</div>
+					</DndContext>
 				</div>
 			</div>
 		</Section>
