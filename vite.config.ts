@@ -10,7 +10,11 @@ import { resolve } from 'node:path'
 export default defineConfig({
   plugins: [paraglideVitePlugin({ project: './project.inlang', outdir: './src/paraglide' }),
     tanstackRouter({ autoCodeSplitting: true }),
-    viteReact(),
+    viteReact({
+      babel: {
+        plugins: ['babel-plugin-react-compiler'],
+      },
+    }),
     tailwindcss(),
   ],
 /*   test: {
