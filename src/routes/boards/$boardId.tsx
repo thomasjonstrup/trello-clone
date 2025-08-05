@@ -3,12 +3,14 @@ import { Section } from "@/components/Section";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useBoard } from "@/hooks/useBoard";
+import { boardQueryOptions, useBoard } from "@/hooks/useBoard";
 import { useColumns } from "@/hooks/useColumns";
 import { useCreateColumn } from "@/hooks/useCreateColumn";
 import { createFileRoute, useParams } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { useState } from "react";
+
+import { z } from "zod";
 
 import { useUpdateTask } from "@/hooks/useTasks";
 import {
@@ -32,6 +34,20 @@ import { CSS } from "@dnd-kit/utilities";
 
 export const Route = createFileRoute("/boards/$boardId")({
 	component: RouteComponent,
+	beforeLoad: async ({ params }) => {
+		const schema = z.object({
+			boardId: z.coerce.number().int().positive(),
+		});
+
+		const result = schema.safeParse(params);
+		if (!result.success) {
+			throw new Error("Invalid board ID");
+		}
+
+		return { boardId: result.data.boardId };
+	},
+	loader: ({ context: { queryClient }, params: { boardId } }) =>
+		queryClient.ensureQueryData(boardQueryOptions(Number(boardId))),
 });
 
 function RouteComponent() {
